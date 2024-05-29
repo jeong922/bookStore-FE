@@ -1,7 +1,10 @@
-import { ReactNode, createContext, useState } from 'react';
+import { ReactNode, createContext, useEffect, useState } from 'react';
 import { ThemeName, getTheme } from '../style/theme';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../style/global';
+
+const DEFAULT_THEME_NAME = 'light';
+const THEME_LOCALSTORAGE_KEY = 'book_store_theme';
 
 interface State {
   themeName: ThemeName;
@@ -9,7 +12,7 @@ interface State {
 }
 
 export const state = {
-  themeName: 'light' as ThemeName,
+  themeName: DEFAULT_THEME_NAME as ThemeName,
   toggleTheme: () => {},
 };
 
@@ -20,10 +23,23 @@ export const BookStoreThemeProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [themeName, setThemeName] = useState<ThemeName>('light');
+  const [themeName, setThemeName] = useState<ThemeName>(DEFAULT_THEME_NAME);
   const toggleTheme = () => {
     setThemeName(themeName === 'light' ? 'dark' : 'light');
+    localStorage.setItem(
+      THEME_LOCALSTORAGE_KEY,
+      themeName === 'light' ? 'dark' : 'light'
+    );
   };
+
+  useEffect(() => {
+    const savedThemeName = localStorage.getItem(
+      THEME_LOCALSTORAGE_KEY
+    ) as ThemeName;
+
+    setThemeName(savedThemeName || DEFAULT_THEME_NAME);
+  }, []);
+
   return (
     <ThemeContext.Provider value={{ themeName, toggleTheme }}>
       <ThemeProvider theme={getTheme(themeName)}>
@@ -33,5 +49,3 @@ export const BookStoreThemeProvider = ({
     </ThemeContext.Provider>
   );
 };
-
-// 프로젝트의 테마는 BookStoreThemeProvider에 의존
