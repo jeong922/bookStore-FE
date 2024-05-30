@@ -2,22 +2,20 @@ import styled from 'styled-components';
 import Title from '../components/common/Title';
 import InputText from '../components/common/InputText';
 import Button from '../components/common/Button';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { signup } from '../api/auth.api';
+import { useAlert } from '../hooks/useAlert';
 
-interface SingupProps {
+export interface SingupProps {
+  name: string;
   email: string;
   password: string;
 }
 
 export default function Signup() {
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  // };
+  const navigate = useNavigate();
+  const { showAlert } = useAlert();
   const {
     register,
     handleSubmit,
@@ -25,7 +23,10 @@ export default function Signup() {
   } = useForm<SingupProps>();
 
   const onSubmit = (data: SingupProps) => {
-    console.log(data);
+    signup(data).then((res) => {
+      showAlert('회원가입이 완료되었습니다.');
+      navigate('/login');
+    });
   };
 
   return (
@@ -33,6 +34,14 @@ export default function Signup() {
       <Title size='large'>회원가입</Title>
       <SignupStyle>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <fieldset>
+            <InputText
+              placeHolder='이름'
+              inputType='text'
+              {...register('name', { required: true })}
+            />
+            {errors.name && <p className='error-text'>이름을 입력해 주세요.</p>}
+          </fieldset>
           <fieldset>
             <InputText
               placeHolder='이메일'
