@@ -4,35 +4,54 @@ import InputText from '../components/common/InputText';
 import Button from '../components/common/Button';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+interface SingupProps {
+  email: string;
+  password: string;
+}
 
 export default function Signup() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  // };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SingupProps>();
+
+  const onSubmit = (data: SingupProps) => {
+    console.log(data);
   };
 
   return (
     <>
       <Title size='large'>회원가입</Title>
       <SignupStyle>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset>
             <InputText
               placeHolder='이메일'
               inputType='email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              {...register('email', { required: true })}
             />
+            {errors.email && (
+              <p className='error-text'>이메일을 입력해 주세요.</p>
+            )}
           </fieldset>
           <fieldset>
             <InputText
               placeHolder='비밀번호'
               inputType='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              {...register('password', { required: true })}
             />
+            {errors.password && (
+              <p className='error-text'>비밀번호를 입력해 주세요</p>
+            )}
           </fieldset>
           <fieldset>
             <Button type='submit' size='medium' scheme='primary'>
