@@ -1,15 +1,11 @@
 import styled from 'styled-components';
 import { FaBook, FaSignInAlt, FaRegUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
-const CATEGORY = [
-  { id: null, category: '전체' },
-  { id: 1, category: '동화' },
-  { id: 2, category: '소설' },
-  { id: 3, category: '사회' },
-];
+import { useCategory } from '../../hooks/useCategory';
 
 export default function Header() {
+  const { category } = useCategory();
+
   return (
     <HeaderStyle>
       <h1 className='logo'>
@@ -20,7 +16,7 @@ export default function Header() {
       </h1>
       <nav className='category'>
         <ul>
-          {CATEGORY.map((item) => (
+          {category.map((item) => (
             <li key={item.id}>
               <Link
                 to={
