@@ -14,6 +14,8 @@ export type ButtonSize = 'large' | 'medium' | 'small';
 
 export type ButtonScheme = 'primary' | 'normal';
 
+export type LayoutWidth = 'large' | 'medium' | 'small';
+
 interface Theme {
   name: ThemeName;
   color: Record<ColorKey, string>;
@@ -28,7 +30,6 @@ interface Theme {
       padding: string;
     };
   };
-
   buttonScheme: {
     [key in ButtonScheme]: {
       color: string;
@@ -37,6 +38,11 @@ interface Theme {
   };
   borderRadius: {
     default: string;
+  };
+  layout: {
+    width: {
+      [key in LayoutWidth]: string;
+    };
   };
 }
 
@@ -87,6 +93,13 @@ export const light: Theme = {
   },
   borderRadius: {
     default: '4px',
+  },
+  layout: {
+    width: {
+      large: '1020px',
+      medium: '760px',
+      small: '320px',
+    },
   },
 };
 
