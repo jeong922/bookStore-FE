@@ -22,7 +22,7 @@ export default function Header() {
             <li key={item.id}>
               <Link
                 to={
-                  item.id === null ? '/books' : `/books?category_id=${item.id}`
+                  item.id === null ? '/books' : `/books?categoryId=${item.id}`
                 }
               >
                 {item.category}

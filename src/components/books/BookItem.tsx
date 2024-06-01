@@ -3,14 +3,16 @@ import { Book } from '../../models/book.model';
 import { getImgSrc } from '../../utils/image';
 import { formatNumber } from '../../utils/format';
 import { FaHeart } from 'react-icons/fa';
+import { ViewMode } from './BooksViewSwitcher';
 
 interface Props {
   book: Book;
+  view?: ViewMode;
 }
 
-export default function BookItem({ book }: Props) {
+export default function BookItem({ book, view }: Props) {
   return (
-    <BookItemStyle>
+    <BookItemStyle view={view}>
       <div className='img'>
         <img src={getImgSrc(book.cover)} alt={book.title} />
       </div>
@@ -28,14 +30,15 @@ export default function BookItem({ book }: Props) {
   );
 }
 
-const BookItemStyle = styled.div`
+const BookItemStyle = styled.div<Pick<Props, 'view'>>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ view }) => (view === 'grid' ? 'column' : 'row')};
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 
   .img {
     border-radius: ${({ theme }) => theme.borderRadius.default};
     overflow: hidden;
+    width: ${({ view }) => (view === 'grid' ? 'auto' : '160px')};
     img {
       max-width: 100%;
     }
@@ -44,6 +47,7 @@ const BookItemStyle = styled.div`
   .content {
     padding: 16px;
     position: relative;
+    flex: ${({ view }) => (view === 'grid' ? 0 : 1)};
     .title {
       font-size: 1.25rem;
       font-weight: 700;
@@ -53,6 +57,12 @@ const BookItemStyle = styled.div`
       font-size: 0.875rem;
       color: ${({ theme }) => theme.color.secondary};
       margin: 0 0 4px 0;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
     .author {
       font-size: 0.875rem;
