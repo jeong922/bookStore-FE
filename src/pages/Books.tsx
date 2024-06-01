@@ -20,8 +20,7 @@ export default function Books() {
         </div>
         {!isEmpty && <BooksList books={books} />}
         {isEmpty && <BooksEmpty />}
-        {/* {!isEmpty && <Pagination pagination={pagination} />} */}
-        <Pagination pagination={pagination} />
+        {!isEmpty && <Pagination pagination={pagination} />}
       </BooksStyle>
     </>
   );
