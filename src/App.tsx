@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Error from './components/common/Error';
 import Signup from './pages/Signup';
 import ResetPassword from './pages/ResetPassword';
+import Login from './pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <ResetPassword />
+      </Layout>
+    ),
+  },
+  {
+    path: '/login',
+    element: (
+      <Layout>
+        <Login />
       </Layout>
     ),
   },

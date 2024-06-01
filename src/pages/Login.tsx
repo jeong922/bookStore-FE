@@ -4,8 +4,10 @@ import InputText from '../components/common/InputText';
 import Button from '../components/common/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { signup } from '../api/auth.api';
+import { login, signup } from '../api/auth.api';
 import { useAlert } from '../hooks/useAlert';
+import { SignupStyle } from './Signup';
+import { useAuthStore } from '../store/authStore';
 
 export interface SingupProps {
   name: string;
@@ -13,9 +15,12 @@ export interface SingupProps {
   password: string;
 }
 
-export default function Signup() {
+export default function Login() {
   const navigate = useNavigate();
   const { showAlert } = useAlert();
+
+  const { storeLogin } = useAuthStore();
+
   const {
     register,
     handleSubmit,
@@ -23,25 +28,25 @@ export default function Signup() {
   } = useForm<SingupProps>();
 
   const onSubmit = (data: SingupProps) => {
-    signup(data).then((res) => {
-      showAlert('회원가입이 완료되었습니다.');
-      navigate('/login');
-    });
+    login(data)
+      .then((res) => {
+        storeLogin(res.token);
+
+        showAlert('로그인이 완료되었습니다.');
+        navigate('/');
+      })
+      .catch((error) => {
+        showAlert(
+          '이메일 또는 비밀번호가 유효하지 않습니다. 다시 한번 확인해 주세요'
+        );
+      });
   };
 
   return (
     <>
-      <Title size='large'>회원가입</Title>
+      <Title size='large'>로그인</Title>
       <SignupStyle>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <fieldset>
-            <InputText
-              placeHolder='이름'
-              inputType='text'
-              {...register('name', { required: true })}
-            />
-            {errors.name && <p className='error-text'>이름을 입력해 주세요.</p>}
-          </fieldset>
           <fieldset>
             <InputText
               placeHolder='이메일'
@@ -64,44 +69,15 @@ export default function Signup() {
           </fieldset>
           <fieldset>
             <Button type='submit' size='medium' scheme='primary'>
-              회원가입
+              로그인
             </Button>
           </fieldset>
           <div className='info'>
             <Link to='/reset'>비밀번호 초기화</Link>
+            <Link to='/signup'>회원가입</Link>
           </div>
         </form>
       </SignupStyle>
     </>
   );
 }
-
-export const SignupStyle = styled.div`
-  max-width: ${({ theme }) => theme.layout.width.small};
-  margin: 80px auto;
-
-  fieldset {
-    border: 0;
-    padding: 0 0 8px 0;
-  }
-
-  input {
-    width: 100%;
-  }
-
-  button {
-    width: 100%;
-  }
-
-  .info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 16px 0 0 0;
-  }
-
-  .error-text {
-    color: red;
-  }
-`;
