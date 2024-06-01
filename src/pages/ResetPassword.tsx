@@ -26,15 +26,12 @@ export default function ResetPassword() {
   } = useForm<SingupProps>();
 
   const onSubmit = (data: SingupProps) => {
-    console.log(data);
     if (resetRequested) {
-      // 초기화
       resetPassword(data).then(() => {
         showAlert('비밀번호가 초기화 되었습니다.');
         navigate('/login');
       });
     } else {
-      // 요청
       resetRequest(data).then(() => {
         setResetRequested(true);
       });
