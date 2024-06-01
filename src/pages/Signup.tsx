@@ -83,9 +83,6 @@ export const SignupStyle = styled.div`
   fieldset {
     border: 0;
     padding: 0 0 8px 0;
-    .error-text {
-      color: red;
-    }
   }
 
   input {
@@ -99,5 +96,9 @@ export const SignupStyle = styled.div`
   .info {
     text-align: center;
     padding: 16px 0 0 0;
+  }
+
+  .error-text {
+    color: red;
   }
 `;

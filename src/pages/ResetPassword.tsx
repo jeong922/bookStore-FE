@@ -18,6 +18,7 @@ export default function ResetPassword() {
   const navigate = useNavigate();
   const { showAlert } = useAlert();
   const [resetRequested, setResetRequested] = useState(false);
+  const [error, setError] = useState('');
 
   const {
     register,
@@ -27,14 +28,33 @@ export default function ResetPassword() {
 
   const onSubmit = (data: SingupProps) => {
     if (resetRequested) {
-      resetPassword(data).then(() => {
-        showAlert('비밀번호가 초기화 되었습니다.');
-        navigate('/login');
-      });
+      resetPassword(data)
+        .then(() => {
+          showAlert('비밀번호가 초기화 되었습니다.');
+          navigate('/login');
+        })
+        .catch((error) => {
+          setError(error.response.data.message);
+        });
     } else {
-      resetRequest(data).then(() => {
-        setResetRequested(true);
-      });
+      setError('');
+      resetRequest(data)
+        .then(() => {
+          setResetRequested(true);
+        })
+        .catch((error) => {
+          const code = error.response.request.status;
+          let message: string = '';
+
+          switch (code) {
+            case 401:
+              message = '이메일을 확인해 주세요.';
+              break;
+            default:
+              console.log(`${code}에 해당하는 값이 없음!`);
+          }
+          setError(message);
+        });
     }
   };
 
@@ -65,12 +85,12 @@ export default function ResetPassword() {
               )}
             </fieldset>
           )}
-
           <fieldset>
             <Button type='submit' size='medium' scheme='primary'>
               {resetRequested ? '비밀번호 초기화' : '초기화 요청'}
             </Button>
           </fieldset>
+          {error && <p className='error-text'>{error}</p>}
           <div className='info'>
             <Link to='/login'>로그인 페이지</Link>
           </div>
