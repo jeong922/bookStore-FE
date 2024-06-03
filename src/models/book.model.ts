@@ -12,6 +12,7 @@ export interface Book {
   price: number;
   publishedDate: string;
   category: string;
+  categoryId: number;
   likes: number;
   liked: number;
 }

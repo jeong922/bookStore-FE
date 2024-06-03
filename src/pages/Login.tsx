@@ -18,7 +18,6 @@ export interface SingupProps {
 export default function Login() {
   const navigate = useNavigate();
   const { showAlert } = useAlert();
-
   const { storeLogin } = useAuthStore();
 
   const {
@@ -31,7 +30,6 @@ export default function Login() {
     login(data)
       .then((res) => {
         storeLogin(res.token);
-
         showAlert('로그인이 완료되었습니다.');
         navigate('/');
       })

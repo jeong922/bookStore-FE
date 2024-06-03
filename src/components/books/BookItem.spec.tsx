@@ -19,6 +19,7 @@ const dummyBook: Book = {
   price: 18900,
   publishedDate: '2024-04-07',
   category: '만화',
+  categoryId: 2,
   likes: 0,
   liked: 0,
 };
