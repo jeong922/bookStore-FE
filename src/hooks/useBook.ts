@@ -45,11 +45,16 @@ export const useBook = (bookId: string | undefined) => {
     addCart({
       bookId: book.id,
       quantity,
-    }).then(() => {
-      setTimeout(() => {
-        setCartAdded(true);
-      }, 3000);
-    });
+    })
+      .then(() => {
+        setTimeout(() => {
+          setCartAdded(true);
+        }, 3000);
+      })
+      .catch((error) => {
+        showAlert('로그인이 필요합니다.');
+        navigate('/login');
+      });
   };
 
   useEffect(() => {
