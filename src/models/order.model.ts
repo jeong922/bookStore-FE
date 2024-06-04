@@ -9,3 +9,16 @@ export interface Order {
   receiver: string;
   contact: string;
 }
+
+export interface OrderSheet {
+  items: number[];
+  totalQuantity: number;
+  totalPrice: number;
+  mainBookTitle: string;
+  paymentInformation: string;
+  delivery: {
+    adress: string;
+    receiver: string;
+    contact: string;
+  };
+}
