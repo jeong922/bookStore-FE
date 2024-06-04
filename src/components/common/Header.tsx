@@ -41,7 +41,9 @@ export default function Header() {
               <Link to='/orderlist'>주문 내역</Link>
             </li>
             <li>
-              <button onClick={storeLogout}>로그아웃</button>
+              <button className='logout' onClick={storeLogout}>
+                로그아웃
+              </button>
             </li>
           </ul>
         ) : (
@@ -114,7 +116,7 @@ const HeaderStyle = styled.header`
           display: flex;
           align-items: center;
           line-height: 1;
-          background: non;
+          background: none;
           border: none;
           cursor: pointer;
           svg {
