@@ -66,8 +66,6 @@ export default function Order() {
       paymentInformation: payment,
     };
 
-    console.log(orderData);
-
     showConfirm('주문을 진행하시겠습니까?', () => {
       order(orderData).then(() => {
         showAlert('주문이 처리되었습니다.');

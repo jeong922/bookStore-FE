@@ -1,4 +1,5 @@
 import { Cart } from './cart.model';
+import { Pagination } from './pagination.model';
 
 export interface Order {
   id: number;
@@ -37,4 +38,14 @@ export interface OrderDetailItem {
 
 export interface OrderListItem extends Order {
   detail?: OrderDetailItem[];
+}
+
+export interface FetchOrdersResponse {
+  orders: OrderListItem[];
+  pagination: Pagination;
+}
+
+export interface FetchOrders {
+  maxResults?: number;
+  page: number;
 }

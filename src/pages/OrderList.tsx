@@ -7,7 +7,6 @@ import Button from '../components/common/Button';
 
 export default function OrderList() {
   const { orders, selectedItemId, selectOrderItem } = useOrders();
-
   return (
     <>
       <Title size='large'>주문 내역</Title>
@@ -41,7 +40,11 @@ export default function OrderList() {
                   <td>{formatNumber(order.totalPrice)}원</td>
                   <td>{order.paymentInformation}</td>
                   <td>
-                    <Button size='small' scheme='normal'>
+                    <Button
+                      size='small'
+                      scheme='normal'
+                      onClick={() => selectOrderItem(order.id)}
+                    >
                       자세히
                     </Button>
                   </td>
@@ -49,19 +52,20 @@ export default function OrderList() {
                 {selectedItemId === order.id && (
                   <tr>
                     <td></td>
-                    <td colSpan={8}></td>
-                    <ul className='detail'>
-                      {order?.detail &&
-                        order.detail?.map((item) => (
-                          <li key={item.bookId}>
-                            <div>
-                              <span>{item.bookId}</span>
-                              <span>{item.author}</span>
-                              <span>{formatNumber(item.price)}원</span>
-                            </div>
-                          </li>
-                        ))}
-                    </ul>
+                    <td colSpan={8}>
+                      <ul className='detail'>
+                        {order?.detail &&
+                          order.detail?.map((item) => (
+                            <li key={item.bookId}>
+                              <div>
+                                <span>{item.bookId}</span>
+                                <span>{item.author}</span>
+                                <span>{formatNumber(item.price)}원</span>
+                              </div>
+                            </li>
+                          ))}
+                      </ul>
+                    </td>
                   </tr>
                 )}
               </React.Fragment>
