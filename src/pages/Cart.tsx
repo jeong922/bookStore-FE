@@ -54,7 +54,7 @@ export default function Cart() {
     }
 
     const orderData: Omit<OrderSheet, 'delivery' | 'paymentInformation'> = {
-      items: checkedItems,
+      items: checkedItems.flatMap((v) => carts.filter((item) => v === item.id)),
       totalPrice,
       totalQuantity,
       mainBookTitle: carts[0].title,
@@ -102,7 +102,7 @@ export default function Cart() {
   );
 }
 
-const CartStyle = styled.div`
+export const CartStyle = styled.div`
   display: flex;
   gap: 24px;
   justify-content: space-between;
@@ -119,5 +119,43 @@ const CartStyle = styled.div`
     display: flex;
     flex-direction: column;
     gap: 24px;
+  }
+
+  .order-info {
+    h1 {
+      padding: 0 0 24px 0;
+    }
+
+    border: 1px solid ${({ theme }) => theme.color.border};
+    border-radius: 1px solid ${({ theme }) => theme.borderRadius.default};
+    padding: 12px;
+  }
+
+  .delivery {
+    fieldset {
+      border: 0;
+      margin: 0;
+      padding: 0 0 12px 0;
+      display: flex;
+      justify-content: start;
+      gap: 8px;
+
+      label {
+        width: 80px;
+      }
+
+      .input {
+        flex: 1;
+        input {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .error-text {
+    color: red;
+    margin: 0;
+    padding: 0 0 12px 0;
+    text-align: right;
   }
 `;

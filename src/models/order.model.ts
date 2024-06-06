@@ -1,3 +1,5 @@
+import { Cart } from './cart.model';
+
 export interface Order {
   id: number;
   createdAt: string;
@@ -11,14 +13,28 @@ export interface Order {
 }
 
 export interface OrderSheet {
-  items: number[];
+  items: Cart[] | number[];
   totalQuantity: number;
   totalPrice: number;
   mainBookTitle: string;
   paymentInformation: string;
-  delivery: {
-    adress: string;
-    receiver: string;
-    contact: string;
-  };
+  delivery: Delivery;
+}
+
+export interface Delivery {
+  address: string;
+  receiver: string;
+  contact: string;
+}
+
+export interface OrderDetailItem {
+  bookId: number;
+  titlt: string;
+  author: string;
+  price: number;
+  quantity: number;
+}
+
+export interface OrderListItem extends Order {
+  detail?: OrderDetailItem[];
 }
