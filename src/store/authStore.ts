@@ -8,7 +8,7 @@ interface StoreState {
 
 export const getToken = () => {
   const token = localStorage.getItem('token');
-  return `Bearer ${token}`;
+  return token;
 };
 
 const setToken = (token: string) => {

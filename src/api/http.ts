@@ -5,12 +5,13 @@ const BASE_URL = 'http://localhost:8080';
 const DEFAULT_TIMEOUT = 30000;
 
 export const createClient = (config?: AxiosRequestConfig) => {
+  const token = getToken();
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
     timeout: DEFAULT_TIMEOUT,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: getToken() ? getToken() : '',
+      Authorization: token ? `Bearer ${token}` : '',
     },
     withCredentials: true,
     ...config,
@@ -21,7 +22,6 @@ export const createClient = (config?: AxiosRequestConfig) => {
       return response;
     },
     (error) => {
-      // 로그인 만료 처리
       if (error.response.status === 401) {
         removeToken();
         window.location.href = '/login';
