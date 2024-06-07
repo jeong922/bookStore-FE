@@ -1,29 +1,15 @@
-import {
-  FetchOrders,
-  FetchOrdersResponse,
-  OrderDatailItem,
-} from './../models/order.model';
+import { FetchOrders } from './../models/order.model';
 import { OrderSheet } from '../models/order.model';
-import { httpClient } from './http';
+import { requestHandler } from './http';
 
 export const order = async (orderData: OrderSheet) => {
-  const response = await httpClient.post('/orders', orderData);
-
-  return response.data;
+  return await requestHandler('post', '/orders', orderData);
 };
 
 export const fetchOrders = async (params: FetchOrders) => {
-  const response = await httpClient.get<FetchOrdersResponse>('/orders', {
-    params: params,
-  });
-
-  return response.data;
+  return await requestHandler('get', '/orders', params);
 };
 
 export const fetchOrder = async (orderId: number) => {
-  const response = await httpClient.get<OrderDatailItem[]>(
-    `/orders/${orderId}`
-  );
-
-  return response.data;
+  return await requestHandler('get', `/orders/${orderId}`);
 };
