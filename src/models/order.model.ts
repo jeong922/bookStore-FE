@@ -28,7 +28,7 @@ export interface Delivery {
   contact: string;
 }
 
-export interface OrderDetailItem {
+export interface OrderDatailItem {
   bookId: number;
   titlt: string;
   author: string;
@@ -37,7 +37,7 @@ export interface OrderDetailItem {
 }
 
 export interface OrderListItem extends Order {
-  detail?: OrderDetailItem[];
+  detail: OrderDatailItem[] | null;
 }
 
 export interface FetchOrdersResponse {

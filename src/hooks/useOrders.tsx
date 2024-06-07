@@ -38,6 +38,7 @@ export const useOrders = () => {
 
     fetchOrder(orderId).then((orderDetail) => {
       setSelectedItemId(orderId);
+      console.log(orderDetail);
       const data = orders.map((item) => {
         if (item.id === orderId) {
           return {
@@ -47,9 +48,7 @@ export const useOrders = () => {
         }
         return item;
       });
-
-      console.log('data', data);
-      // setOrders(data);
+      setOrders(data);
     });
   };
 
