@@ -11,10 +11,6 @@ import Loading from '@/components/common/Loading';
 export default function Books() {
   const { books, pagination, isEmpty, isBooksLoading } = useBooks();
 
-  if (isEmpty) {
-    return <BooksEmpty />;
-  }
-
   if (!books || !pagination || isBooksLoading) {
     return <Loading />;
   }
@@ -29,6 +25,8 @@ export default function Books() {
         </div>
         <BooksList books={books} />
         <Pagination pagination={pagination} />
+
+        {isEmpty && <BooksEmpty />}
       </BooksStyle>
     </>
   );
