@@ -1,15 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { BookDetail } from '../models/book.model';
+import { BookDetail, BookReviewItem } from '../models/book.model';
 import { fetchBook, likeBook, unlikeBook } from '../api/books.api';
 import { useAuthStore } from '../store/authStore';
 import { useAlert } from './useAlert';
 import { addCart } from '../api/carts.api';
+import { fetchBookReview } from '@/api/review.api';
 
 export const useBook = (bookId: string | undefined) => {
   const navigate = useNavigate();
   const [book, setBook] = useState<BookDetail | null>(null);
   const [cartAdded, setCartAdded] = useState(false);
+  const [reviews, setReview] = useState<BookReviewItem[]>([]);
   const { isloggedIn } = useAuthStore();
   const { showAlert } = useAlert();
 
@@ -65,7 +67,11 @@ export const useBook = (bookId: string | undefined) => {
     fetchBook(bookId).then((book) => {
       setBook(book);
     });
+
+    fetchBookReview(bookId).then((reviews) => {
+      setReview(reviews);
+    });
   }, [bookId]);
 
-  return { book, likeToggle, addToCart, cartAdded };
+  return { book, likeToggle, addToCart, cartAdded, reviews };
 };

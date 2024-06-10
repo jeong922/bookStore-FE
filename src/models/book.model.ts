@@ -18,3 +18,21 @@ export interface Book {
 }
 
 export interface BookDetail extends Book {}
+
+// export interface BookReviewItem {
+//   id: number;
+//   bookId: number;
+//   review: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   userId: number;
+//   name: string;
+//   email: string;
+// }
+export interface BookReviewItem {
+  id: number;
+  userName: string;
+  content: string;
+  score: number;
+  createdAt: string;
+}
