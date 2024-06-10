@@ -8,6 +8,7 @@ import { formatDate, formatNumber } from '../utils/format';
 import EllipsisBox from '../components/common/EllipsisBox';
 import LikeButton from '../components/book/LikeButton';
 import AddToCart from '../components/book/AddToCart';
+import BookReview from '@/components/book/BookReview';
 
 const bookInfoList = [
   {
@@ -80,8 +81,12 @@ export default function BookDetail() {
       <div className='content'>
         <Title size='medium'>상세 설명</Title>
         <EllipsisBox linelimit={4}>{book.detail}</EllipsisBox>
+
         <Title size='medium'>목차</Title>
         <pre className='index'>{book.contents}</pre>
+
+        <Title size='medium'>리뷰</Title>
+        <BookReview reviews={reviews} />
       </div>
     </BookDetailStyle>
   );

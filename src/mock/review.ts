@@ -22,7 +22,7 @@ import { fakerKO as faker } from '@faker-js/faker';
 const mockReviewData: BookReviewItem[] = Array.from({ length: 8 }).map(
   (_, index) => ({
     id: index,
-    userName: `${faker.person.lastName()} ${faker.person.firstName()}`,
+    userName: `${faker.person.lastName()}${faker.person.firstName()}`,
     content: faker.lorem.paragraph(),
     createdAt: faker.date.past().toISOString(),
     score: faker.helpers.rangeToNumber({ min: 0, max: 5 }),
