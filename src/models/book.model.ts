@@ -36,3 +36,5 @@ export interface BookReviewItem {
   score: number;
   createdAt: string;
 }
+
+export type BookReviewItemWrite = Pick<BookReviewItem, 'content' | 'score'>;
