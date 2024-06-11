@@ -8,6 +8,7 @@ import BooksViewSwitcher from '../components/books/BooksViewSwitcher';
 import Loading from '@/components/common/Loading';
 import { useBooksInfinite } from '@/hooks/useBooksInfinite';
 import Button from '@/components/common/Button';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 export default function Books() {
   const {
@@ -18,6 +19,19 @@ export default function Books() {
     fetchNextPage,
     hasNextPage,
   } = useBooksInfinite();
+
+  const loadMore = () => {
+    if (!hasNextPage) {
+      return;
+    }
+    fetchNextPage();
+  };
+
+  const moreRef = useIntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) {
+      loadMore();
+    }
+  });
 
   if (!books || !pagination || isBooksLoading) {
     return <Loading />;
@@ -33,7 +47,7 @@ export default function Books() {
         </div>
         <BooksList books={books} />
         {/* <Pagination pagination={pagination} /> */}
-        <div className='more'>
+        <div className='more' ref={moreRef}>
           <Button
             size='medium'
             scheme='normal'
