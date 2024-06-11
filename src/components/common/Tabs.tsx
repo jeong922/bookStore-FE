@@ -21,13 +21,12 @@ function Tabs({ children }: TabsProps) {
     children
   ) as React.ReactElement<TabProps>[];
 
-  console.log(tabs);
-
   return (
     <TabsStyle>
       <div className='tab-header'>
         {tabs.map((tab, index) => (
           <button
+            key={tab.key}
             onClick={() => setActiveIndex(index)}
             className={activeIndex === index ? 'active' : ''}
           >
